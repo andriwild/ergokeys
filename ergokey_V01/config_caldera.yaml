@@ -51,8 +51,8 @@ points:
             stagger: -3.0
             column_net: P017
       rows:
-        # mod:
-        #   row_net: P113
+        mod:
+          row_net: P113
         bottom:
           row_net: P115
         home:
@@ -61,38 +61,185 @@ points:
           row_net: P029
         num:
           row_net: P031
-
-
-
+      anchor:
+        # Shift the PCB slightly to the right and down, otherwise it's weirdly positioned outside of the main sheet in KiCad
+        shift: [100, -150]
   mirror:
     ref: matrix_sixth_num
     distance: 60
 outlines:
   keys:
-    - where: true
-      what: rectangle
+    - what: rectangle
+      where: true
       size: [14, 14]
       fillet: 0
   board_left:
-    - where: true
-      what: rectangle
-      size: [px, py]
+    - what: polygon
+      operation: stack
       fillet: 2
-  xl_board_left:
-    - where: true
-      what: rectangle
-      size: [px+2, py+2]
-      fillet: 2
+      points:
+        # Top
+        - ref: matrix_first_num
+          shift: [-padX, padY]
+        - ref: matrix_second_num
+          shift: [pushX - pad, padY]
+        - ref: matrix_third_num
+          shift: [-pushX - pad, padY]
+        - ref: matrix_third_num
+          shift: [pushX - pad, padY]
+        - ref: matrix_fourth_num
+          shift: [-pushX - pad, padY]
+        - ref: matrix_fourth_num
+          shift: [padX, padY]
+        - ref: matrix_fifth_num
+          shift: [-pushX + pad, padY]
+        - ref: matrix_fifth_num
+          shift: [padX, padY]
+        - ref: matrix_sixth_num
+          # Won't fillet unless small num added. Bug?
+          shift: [-pushX + pad + 0.0001, padY]
+        - ref: matrix_sixth_num
+          shift: [padX, padY]
+        # Bottom
+        - ref: matrix_sixth_mod
+          shift: [padX, -padY]
+        - ref: matrix_sixth_mod
+          shift: [-pushX, -padY]
+        - ref: matrix_fifth_mod
+          shift: [pushX - pad, -padY]
+        - ref: matrix_fifth_mod
+          shift: [-padX, -padY]
+        - ref: matrix_fourth_mod
+          shift: [pushX - pad, -padY]
+        - ref: matrix_fourth_mod
+          shift: [-pushX + pad, -padY]
+        - ref: matrix_third_mod
+          shift: [pushX + pad, -padY]
+        - ref: matrix_third_mod
+          shift: [-pushX + pad, -padY]
+        - ref: matrix_second_mod
+          shift: [pushX + pad, -padY]
+        - ref: matrix_second_mod
+          shift: [-pushX + pad, -padY]
+        - ref: matrix_first_mod
+          shift: [-padX, -padY]
+
+        # Connect to top
+        - ref: matrix_first_num
+          shift: [-padX, -padY]
   board_right:
-    - where: true
-      what: rectangle
-      size: [px, py]
-      fillet: 1
+    - what: polygon
+      operation: stack
+      fillet: 2
+      points:
+        # Top
+        - ref: mirror_matrix_first_num
+          shift: [-padX, padY]
+        - ref: mirror_matrix_second_num
+          shift: [pushX - pad, padY]
+        - ref: mirror_matrix_third_num
+          shift: [-pushX - pad, padY]
+        - ref: mirror_matrix_third_num
+          shift: [pushX - pad, padY]
+        - ref: mirror_matrix_fourth_num
+          shift: [-pushX - pad, padY]
+        - ref: mirror_matrix_fourth_num
+          shift: [padX, padY]
+        - ref: mirror_matrix_fifth_num
+          shift: [-pushX + pad, padY]
+        - ref: mirror_matrix_fifth_num
+          shift: [padX, padY]
+        - ref: mirror_matrix_sixth_num
+          # Won't fillet unless small num added. Bug?
+          shift: [-pushX + pad + 0.0001, padY]
+        - ref: mirror_matrix_sixth_num
+          shift: [padX, padY]
+        # Bottom
+        - ref: mirror_matrix_sixth_mod
+          shift: [padX, -padY]
+        - ref: mirror_matrix_sixth_mod
+          shift: [-pushX, -padY]
+        - ref: mirror_matrix_fifth_mod
+          shift: [pushX - pad, -padY]
+        - ref: mirror_matrix_fifth_mod
+          shift: [-padX, -padY]
+        - ref: mirror_matrix_fourth_mod
+          shift: [pushX - pad, -padY]
+        - ref: mirror_matrix_fourth_mod
+          shift: [-pushX + pad, -padY]
+        - ref: mirror_matrix_third_mod
+          shift: [pushX + pad, -padY]
+        - ref: mirror_matrix_third_mod
+          shift: [-pushX + pad, -padY]
+        - ref: mirror_matrix_second_mod
+          shift: [pushX + pad, -padY]
+        - ref: mirror_matrix_second_mod
+          shift: [-pushX + pad, -padY]
+        - ref: mirror_matrix_first_mod
+          shift: [-padX, -padY]
+
+        # Connect to top
+        - ref: mirror_matrix_first_num
+          shift: [-padX, -padY]
+
+  # Create a slightly larger version of board_left for the case so that it can have room to go around the PCB
+  xl_board_left:
+    - what: polygon
+      operation: stack
+      points:
+        # Top
+        - ref: matrix_first_num
+          shift: [-padX - caseBorder, padY + caseBorder]
+        - ref: matrix_second_num
+          shift: [pushX - pad - caseBorder, padY + caseBorder]
+        - ref: matrix_third_num
+          shift: [-pushX - pad - caseBorder, padY + caseBorder]
+        - ref: matrix_third_num
+          shift: [pushX - pad - caseBorder, padY + caseBorder]
+        - ref: matrix_fourth_num
+          shift: [-pushX - pad - caseBorder, padY + caseBorder]
+        - ref: matrix_fourth_num
+          shift: [padX + caseBorder, padY + caseBorder]
+        - ref: matrix_fifth_num
+          shift: [-pushX + pad + caseBorder, padY + caseBorder]
+        - ref: matrix_fifth_num
+          shift: [padX + caseBorder, padY + caseBorder]
+        - ref: matrix_sixth_num
+          # Won't fillet unless small num added. Bug?
+          shift: [-pushX + pad + 0.0001 + caseBorder, padY + caseBorder]
+        - ref: matrix_sixth_num
+          shift: [padX + caseBorder, padY + caseBorder]
+        # Bottom
+        - ref: matrix_sixth_mod
+          shift: [padX + caseBorder, -padY - caseBorder]
+        - ref: matrix_sixth_mod
+          shift: [-pushX - caseBorder, -padY - caseBorder]
+        - ref: matrix_fifth_mod
+          shift: [pushX - pad - caseBorder, -padY - caseBorder]
+        - ref: matrix_fifth_mod
+          shift: [-padX - caseBorder, -padY - caseBorder]
+        - ref: matrix_fourth_mod
+          shift: [pushX - pad - caseBorder, -padY - caseBorder]
+        - ref: matrix_fourth_mod
+          shift: [-pushX + pad + caseBorder, -padY - caseBorder]
+        - ref: matrix_third_mod
+          shift: [pushX + pad + caseBorder, -padY - caseBorder]
+        - ref: matrix_third_mod
+          shift: [-pushX + pad + caseBorder, -padY - caseBorder]
+        - ref: matrix_second_mod
+          shift: [pushX + pad + caseBorder, -padY - caseBorder]
+        - ref: matrix_second_mod
+          shift: [-pushX + pad + caseBorder, -padY - caseBorder]
+        - ref: matrix_first_mod
+          shift: [-padX - caseBorder, -padY - caseBorder]
+
+        # Connect to top
+        - ref: matrix_first_num
+          shift: [-padX - caseBorder, -padY]
   xl_board_key_cutouts:
     - name: xl_board_left
     - operation: subtract
       name: keys
-
 pcbs:
   left:
     outlines:
@@ -181,16 +328,16 @@ pcbs:
             pos: pos
             neg: GND
       # Reset switch (horizontal community version)
-      # horizontal_reset:
-      #   what: EVQPUC
-      #   params: 
-      #     side: B
-      #     from: GND
-      #     to: RST 
-      #   where:
-      #     ref: matrix_sixth_top
-      #     shift: [9.0, 2.8]
-      #     rotate: -90.0
+      horizontal_reset:
+        what: EVQPUC
+        params: 
+          side: B
+          from: GND
+          to: RST 
+        where:
+          ref: matrix_sixth_top
+          shift: [9.0, 2.8]
+          rotate: -90.0
       # Battery on/off switch
       battery_switch:
         what: slider
@@ -203,31 +350,31 @@ pcbs:
             from: pos
             to: RAW
       # Mounting holes
-      # hole_bottom_right:
-      #   what: mountinghole
-      #   where:
-      #     ref: matrix_fifth_mod
-      #     shift: [-pushX, pushY]
-      # hole_bottom_left:
-      #   what: mountinghole
-      #   where:
-      #     ref: matrix_first_bottom
-      #     shift: [pushX, -pushY]
-      # hole_top_left:
-      #   what: mountinghole
-      #   where:
-      #     ref: matrix_second_num
-      #     shift: [-pushX, -pushY]
-      # hole_top_right:
-      #   what: mountinghole
-      #   where:
-      #     ref: matrix_fifth_top
-      #     shift: [-pushX, pushY]
-      # hole_center:
-      #   what: mountinghole
-      #   where:
-      #     ref: matrix_fourth_bottom
-      #     shift: [-pushX, pushY]
+      hole_bottom_right:
+        what: mountinghole
+        where:
+          ref: matrix_fifth_mod
+          shift: [-pushX, pushY]
+      hole_bottom_left:
+        what: mountinghole
+        where:
+          ref: matrix_first_bottom
+          shift: [pushX, -pushY]
+      hole_top_left:
+        what: mountinghole
+        where:
+          ref: matrix_second_num
+          shift: [-pushX, -pushY]
+      hole_top_right:
+        what: mountinghole
+        where:
+          ref: matrix_fifth_top
+          shift: [-pushX, pushY]
+      hole_center:
+        what: mountinghole
+        where:
+          ref: matrix_fourth_bottom
+          shift: [-pushX, pushY]
       # Write "Caldera" on the PCB
       front_text: &text
         what: text
@@ -307,16 +454,16 @@ pcbs:
             pos: pos
             neg: GND
       # Reset switch (horizontal community version)
-      # horizontal_reset:
-      #   what: EVQPUC
-      #   params: 
-      #     side: B
-      #     from: GND
-      #     to: RST 
-      #   where:
-      #     ref: mirror_matrix_sixth_top
-      #     shift: [9.0, 2.8]
-      #     rotate: -90.0
+      horizontal_reset:
+        what: EVQPUC
+        params: 
+          side: B
+          from: GND
+          to: RST 
+        where:
+          ref: mirror_matrix_sixth_top
+          shift: [9.0, 2.8]
+          rotate: -90.0
       # Battery on/off switch
       battery_switch:
         what: slider
@@ -329,31 +476,31 @@ pcbs:
             from: pos
             to: RAW
       # Mounting holes
-      # hole_bottom_right:
-      #   what: mountinghole
-      #   where:
-      #     ref: mirror_matrix_fifth_mod
-      #     shift: [-pushX, pushY]
-      # hole_bottom_left:
-      #   what: mountinghole
-      #   where:
-      #     ref: mirror_matrix_first_bottom
-      #     shift: [pushX, -pushY]
-      # hole_top_left:
-      #   what: mountinghole
-      #   where:
-      #     ref: mirror_matrix_second_num
-      #     shift: [-pushX, -pushY]
-      # hole_top_right:
-      #   what: mountinghole
-      #   where:
-      #     ref: mirror_matrix_fifth_top
-      #     shift: [-pushX, pushY]
-      # hole_center:
-      #   what: mountinghole
-      #   where:
-      #     ref: mirror_matrix_third_bottom
-      #     shift: [pushX, pushY]
+      hole_bottom_right:
+        what: mountinghole
+        where:
+          ref: mirror_matrix_fifth_mod
+          shift: [-pushX, pushY]
+      hole_bottom_left:
+        what: mountinghole
+        where:
+          ref: mirror_matrix_first_bottom
+          shift: [pushX, -pushY]
+      hole_top_left:
+        what: mountinghole
+        where:
+          ref: mirror_matrix_second_num
+          shift: [-pushX, -pushY]
+      hole_top_right:
+        what: mountinghole
+        where:
+          ref: mirror_matrix_fifth_top
+          shift: [-pushX, pushY]
+      hole_center:
+        what: mountinghole
+        where:
+          ref: mirror_matrix_third_bottom
+          shift: [pushX, pushY]
       # Write "Caldera" on the PCB
       front_text: &text
         what: text

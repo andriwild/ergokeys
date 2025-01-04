@@ -113,6 +113,19 @@ outlines:
     - name: xl_board_left
     - operation: subtract
       name: keys
+  left:
+    - where: true
+      what: rectangle
+      size: [cx+2, cy +2]
+      fillet: 2
+  leftkeys:
+    - where: true
+      what: rectangle
+      size: [14,14]
+  leftcutout:
+    - name: left
+    - operation: subtract
+      name: leftkeys
 
 pcbs:
   left:
